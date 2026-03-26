@@ -3,100 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ data.name }} - 履歷</title>
+    <title>{{ data.name }} - 生技研發工程師 / PM 專業履歷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* 原有樣式保持不變... */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
-        .container { max-width: 900px; margin: 20px auto; background-color: #ffffff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden; position: relative; }
-        .hero-banner { width: 100%; height: 280px; background-color: #ddd; }
-        .hero-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .inner-content { padding: 30px; }
-        .header { text-align: center; padding-bottom: 20px; border-bottom: 3px solid #007bff; margin-bottom: 30px; }
-        .section { margin-bottom: 40px; padding: 15px; border-left: 5px solid #007bff; background-color: #e9f5ff; }
-        
-        /* 標籤頁邏輯 */
+        :root {
+            --primary-color: #004B87;    /* 醫藥權威藍 */
+            --accent-color: #00A3AD;     /* 生技創新綠 */
+            --bg-color: #F4F7F9;         /* 實驗室潔淨灰 */
+            --text-main: #2C3E50;
+            --text-light: #5A6C7D;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 75, 135, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
+            line-height: 1.7; margin: 0; padding: 0; 
+            background-color: var(--bg-color); color: var(--text-main); 
+        }
+
+        .container { max-width: 1000px; margin: 40px auto; padding-bottom: 60px; }
+
+        /* Hero Banner */
+        .hero-banner { 
+            width: 100%; height: 320px; border-radius: 20px 20px 0 0;
+            overflow: hidden; box-shadow: var(--shadow); position: relative;
+        }
+        .hero-banner img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 主容器 */
+        .inner-content { 
+            background: var(--white); margin-top: -40px; position: relative;
+            z-index: 10; border-radius: 20px; padding: 40px; box-shadow: var(--shadow);
+        }
+
+        .header { border-bottom: 2px solid #f0f4f8; padding-bottom: 30px; margin-bottom: 30px; }
+        .header h1 { color: var(--primary-color); font-size: 2.4em; margin: 0; font-weight: 700; }
+
+        /* Tabs 切換系統 */
         .tab-radio { display: none; } 
-        .tab-nav { background-color: #285078; padding: 10px 0; text-align: center; display: flex; justify-content: center; margin-bottom: 20px; }
-        .tab-label { color: white; margin: 0 15px; font-weight: bold; padding: 10px 15px; border-radius: 4px; cursor: pointer; }
-        .tab-content { display: none; padding: 10px 0; }
-        #tab1-radio:checked ~ .tab-nav .label1, #tab2-radio:checked ~ .tab-nav .label2, #tab3-radio:checked ~ .tab-nav .label3 { background-color: #007bff; }
+        .tab-nav { 
+            display: flex; gap: 10px; margin-bottom: 35px; border-bottom: 2px solid #E1E8ED;
+        }
+        .tab-label { 
+            color: var(--text-light); font-weight: 600; padding: 12px 25px; 
+            cursor: pointer; transition: var(--transition); position: relative; bottom: -2px;
+        }
+        #tab1-radio:checked ~ .tab-nav .label1, 
+        #tab2-radio:checked ~ .tab-nav .label2, 
+        #tab3-radio:checked ~ .tab-nav .label3 { 
+            color: var(--primary-color); border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         #tab1-radio:checked ~ #content-1, #tab2-radio:checked ~ #content-2, #tab3-radio:checked ~ #content-3 { display: block; }
 
-        /* 新增：下載按鈕樣式 */
-        .download-btn {
+        /* 區塊樣式 (Card UI) */
+        .section { margin-bottom: 25px; padding: 25px; background: var(--white); border-radius: 12px; border: 1px solid #f0f0f0; }
+        .section h2 { 
+            color: var(--primary-color); font-size: 1.35em; margin-top: 0; 
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section h2::before { content: ""; width: 4px; height: 22px; background: var(--accent-color); border-radius: 2px; }
+
+        /* 技能膠囊 (Pill Tags) */
+        .skill-group { margin-bottom: 20px; }
+        .skill-group strong { display: block; margin-bottom: 10px; color: var(--text-main); font-size: 0.95em; }
+        .skill-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-list li { 
+            background: #f0f9fa; color: var(--accent-color); padding: 5px 14px; 
+            border-radius: 50px; font-size: 0.85em; font-weight: 600; border: 1px solid #d1edf0;
+        }
+
+        /* 經歷時間軸 (Timeline) */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; background: #E1E8ED; }
+        .experience-item { position: relative; margin-bottom: 40px; }
+        .experience-item::before {
+            content: ""; position: absolute; left: -34px; top: 8px; width: 10px; height: 10px;
+            border-radius: 50%; background: var(--primary-color); border: 3px solid var(--white); box-shadow: 0 0 0 3px rgba(0, 75, 135, 0.1);
+        }
+
+        /* Logo 顯示優化 */
+        .flex-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .company-logo, .edu-logo { width: 150px; max-height: 90px; object-fit: contain; }
+        img[src$="NCYU.png"] { 
+            width: 150px !important;    
+            max-height: 90px !important; 
+            transform: scale(1.35);     
+            transform-origin: center right; 
+            margin-right: -30px;        
+            margin-top: 5px;            
+        }
+
+        /* Portfolio 項目 */
+        .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .portfolio-card { 
+            padding: 20px; border-radius: 10px; background: #F9FBFC; border-left: 4px solid var(--accent-color);
+            transition: var(--transition);
+        }
+        .portfolio-card:hover { transform: translateX(5px); background: #f0f7f8; }
+        .portfolio-card h3 { margin: 0 0 8px 0; font-size: 1.1em; color: var(--primary-color); }
+        .portfolio-card p { margin: 0; font-size: 0.95em; color: var(--text-light); }
+
+        /* 聯絡資訊 Grid */
+        .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .contact-item { font-size: 0.95em; display: flex; align-items: center; gap: 8px; }
+        .contact-item strong { color: var(--primary-color); min-width: 60px; }
+
+        /* --- 新增：下載按鈕樣式 --- */
+        .print-btn {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: #28a745;
+            background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 15px 25px;
             border-radius: 50px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 1000;
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0, 75, 135, 0.4);
+            z-index: 9999;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .download-btn:hover { transform: scale(1.1); background-color: #218838; }
+        .print-btn:hover {
+            transform: translateY(-5px);
+            background-color: var(--accent-color);
+        }
 
-        /* --- 重要：列印專用 CSS (@media print) --- */
+        /* --- 新增：PDF 列印專用樣式 (@media print) --- */
         @media print {
-            /* 1. 隱藏不需要出現在 PDF 中的元件 */
-            .tab-nav, .download-btn, .tab-radio { display: none !important; }
-            
-            /* 2. 強制展開所有分頁內容 */
-            .tab-content { display: block !important; opacity: 1 !important; visibility: visible !important; }
-            
-            /* 3. 調整 PDF 版面 */
-            body { background-color: white; }
-            .container { box-shadow: none; margin: 0; width: 100%; max-width: none; }
-            .section { page-break-inside: avoid; background-color: #f9f9f9 !important; -webkit-print-color-adjust: exact; }
-            .hero-banner { height: 200px; -webkit-print-color-adjust: exact; }
+            /* 1. 強制確保背景與顏色印出 */
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body { background-color: white !important; }
+            .container { margin: 0 !important; max-width: 100% !important; padding: 0 !important; }
+            .inner-content { box-shadow: none !important; margin-top: 0 !important; padding: 20px !important; }
+            .hero-banner { height: 180px !important; border-radius: 0 !important; } /* 列印時稍微縮小橫幅節省空間 */
+
+            /* 2. 隱藏不必要的網頁互動元件 */
+            .tab-nav, .print-btn, .tab-radio { display: none !important; }
+
+            /* 3. 最關鍵：強制展開所有分頁內容 */
+            .tab-content { 
+                display: block !important; 
+                opacity: 1 !important; 
+                animation: none !important; 
+                margin-bottom: 30px;
+            }
+
+            /* 4. 防止卡片或區塊被分頁切斷 (Page break rules) */
+            .section, .experience-item, .portfolio-card, .skill-group {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            h2 { page-break-after: avoid; break-after: avoid; }
+        }
+
+        @media (max-width: 768px) {
+            .container { margin: 0; }
+            .inner-content { margin-top: 0; border-radius: 0; padding: 20px; }
+            .flex-header { flex-direction: column-reverse; align-items: flex-start; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .tab-nav { overflow-x: auto; }
+            img[src$="NCYU.png"] { transform: scale(1); width: 110px !important; margin: 0 0 10px 0; }
+            .print-btn { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 14px; }
         }
     </style>
 </head>
 <body>
-    <button class="download-btn" onclick="window.print()">📥 下載完整 PDF 履歷</button>
+    <button class="print-btn" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        下載 PDF 履歷
+    </button>
 
     <div class="container">
         <div class="hero-banner">
-            <img src="./static/images/Taiwan-Health.jpg" alt="背景照">
+            <img src="./static/images/Taiwan-Health.jpg" alt="Biotech Banner">
         </div>
+
         <div class="inner-content">
             <input type="radio" id="tab1-radio" name="tabs" class="tab-radio" checked>
             <input type="radio" id="tab2-radio" name="tabs" class="tab-radio">
             <input type="radio" id="tab3-radio" name="tabs" class="tab-radio">
-            
+
             <header class="header">
-                <h1>{{ data.name }}</h1>
+                <h1>{{ data.name }}</h1>            
             </header>
 
             <nav class="tab-nav">
-                <label for="tab1-radio" class="tab-label label1">個人簡介</label>
-                <label for="tab2-radio" class="tab-label label2">工作經歷</label>
-                <label for="tab3-radio" class="tab-label label3">專案與成果</label>
+                <label for="tab1-radio" class="tab-label label1">專業概況</label>
+                <label for="tab2-radio" class="tab-label label2">職涯經歷</label>
+                <label for="tab3-radio" class="tab-label label3">專案與學術成果</label>
             </nav>
 
             <div id="content-1" class="tab-content">
                 <section class="section">
-                    <h2>聯絡資訊與學歷</h2>
-                    <p>Email: {{ data.contact.email }}</p>
-                    </section>
+                    <h2>聯絡資訊</h2>
+                    <div class="contact-grid">
+                        <div class="contact-item"><strong>Email</strong> <a href="mailto:{{ data.contact.email }}">{{ data.contact.email }}</a></div>
+                        <div class="contact-item"><strong>電話</strong> {{ data.contact.phone }}</div>
+                        <div class="contact-item" style="grid-column: span 2;"><strong>LinkedIn</strong> <a href="{{ data.contact.linkedin }}" target="_blank">點此查看個人檔案</a></div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>教育背景</h2>
+                    {% for edu in data.education %}
+                    <div class="flex-header" style="margin-bottom: 35px;">
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0; font-size: 1.15em;">{{ edu.degree }}</h3>
+                            <div style="color: var(--text-light);">{{ edu.school }} | {{ edu.period }}</div>
+                        </div>
+                        <img src="{{ edu.logo }}" class="edu-logo" alt="School Logo">
+                    </div>
+                    {% endfor %}
+                </section>
+
+                <section class="section">
+                    <h2>核心職能庫</h2>
+                    {% for cat in data.skill_categories %}
+                    <div class="skill-group">
+                        <strong>{{ cat.category }}</strong>
+                        <ul class="skill-list">
+                            {% for tag in cat.tags %}
+                            <li>{{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </section>
             </div>
 
             <div id="content-2" class="tab-content">
                 <section class="section">
-                    <h2>工作經歷</h2>
-                    {% for exp in data.experiences %}
-                        <h3>{{ exp.title }} - {{ exp.company }}</h3>
-                        <ul>
-                        {% for ach in exp.achievements %}
-                            <li>{{ ach }}</li>
+                    <h2>職涯歷程</h2>
+                    <div class="timeline">
+                        {% for exp in data.experiences %}
+                        <div class="experience-item">
+                            <div class="flex-header">
+                                <div style="flex: 1;">
+                                    <h3 style="margin: 0; color: var(--primary-color);">{{ exp.title }}</h3>
+                                    <div style="font-weight: 700; color: var(--text-main); margin: 2px 0;">{{ exp.company }}</div>
+                                    <div style="font-size: 0.85em; color: var(--accent-color); font-weight: 600; margin-bottom: 12px;">{{ exp.period }}</div>
+                                </div>
+                                <img src="{{ exp.logo }}" class="company-logo" alt="Company Logo">
+                            </div>
+                            <ul style="padding-left: 18px; margin: 0; font-size: 0.95em; color: var(--text-light);">
+                                {% for ach in exp.achievements %}
+                                <li style="margin-bottom: 8px;">{{ ach }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
                         {% endfor %}
-                        </ul>
-                    {% endfor %}
+                    </div>
                 </section>
             </div>
 
@@ -104,13 +273,18 @@
                 {% for p_group in data.portfolio %}
                 <section class="section">
                     <h2>{{ p_group.p_type }}</h2>
-                    {% for p_item in p_group.p_items %}
-                        <strong>{{ p_item.title }}</strong>
-                        <p>{{ p_item.desc }}</p>
-                    {% endfor %}
+                    <div class="portfolio-grid">
+                        {% for p_item in p_group.p_items %}
+                        <div class="portfolio-card">
+                            <h3>{{ p_item.title }}</h3>
+                            <p>{{ p_item.desc }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </section>
                 {% endfor %}
             </div>
+
         </div>
     </div>
 </body>
