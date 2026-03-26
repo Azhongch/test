@@ -1,0 +1,35 @@
+name: Build and Deploy Resume
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Jinja2
+        run: pip install jinja2
+
+      - name: Run build script
+        run: python build.py
+
+      # 修正重點：使用專門的部署 Action，它會幫你處理分支切換
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./        # 部署目前的根目錄
+          publish_branch: gh-pages
+          force_orphan: true     # 建立一個乾淨的部署分支

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.name }} - 生技研發工程師 / PM 專業履歷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #004B87;    /* 醫藥權威藍 */
+            --accent-color: #00A3AD;     /* 生技創新綠 */
+            --bg-color: #F4F7F9;         /* 實驗室潔淨灰 */
+            --text-main: #2C3E50;
+            --text-light: #5A6C7D;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 75, 135, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
+            line-height: 1.7; margin: 0; padding: 0; 
+            background-color: var(--bg-color); color: var(--text-main); 
+        }
+
+        .container { max-width: 1000px; margin: 40px auto; padding-bottom: 60px; }
+
+        /* Hero Banner */
+        .hero-banner { 
+            width: 100%; height: 320px; border-radius: 20px 20px 0 0;
+            overflow: hidden; box-shadow: var(--shadow); position: relative;
+        }
+        .hero-banner img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 主容器 */
+        .inner-content { 
+            background: var(--white); margin-top: -40px; position: relative;
+            z-index: 10; border-radius: 20px; padding: 40px; box-shadow: var(--shadow);
+        }
+
+        .header { border-bottom: 2px solid #f0f4f8; padding-bottom: 30px; margin-bottom: 30px; }
+        .header h1 { color: var(--primary-color); font-size: 2.4em; margin: 0; font-weight: 700; }
+
+        /* Tabs 切換系統 */
+        .tab-radio { display: none; } 
+        .tab-nav { 
+            display: flex; gap: 10px; margin-bottom: 35px; border-bottom: 2px solid #E1E8ED;
+        }
+        .tab-label { 
+            color: var(--text-light); font-weight: 600; padding: 12px 25px; 
+            cursor: pointer; transition: var(--transition); position: relative; bottom: -2px;
+        }
+        #tab1-radio:checked ~ .tab-nav .label1, 
+        #tab2-radio:checked ~ .tab-nav .label2, 
+        #tab3-radio:checked ~ .tab-nav .label3 { 
+            color: var(--primary-color); border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #tab1-radio:checked ~ #content-1, #tab2-radio:checked ~ #content-2, #tab3-radio:checked ~ #content-3 { display: block; }
+
+        /* 區塊樣式 (Card UI) */
+        .section { margin-bottom: 25px; padding: 25px; background: var(--white); border-radius: 12px; border: 1px solid #f0f0f0; }
+        .section h2 { 
+            color: var(--primary-color); font-size: 1.35em; margin-top: 0; 
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section h2::before { content: ""; width: 4px; height: 22px; background: var(--accent-color); border-radius: 2px; }
+
+        /* 技能膠囊 (Pill Tags) */
+        .skill-group { margin-bottom: 20px; }
+        .skill-group strong { display: block; margin-bottom: 10px; color: var(--text-main); font-size: 0.95em; }
+        .skill-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-list li { 
+            background: #f0f9fa; color: var(--accent-color); padding: 5px 14px; 
+            border-radius: 50px; font-size: 0.85em; font-weight: 600; border: 1px solid #d1edf0;
+        }
+
+        /* 經歷時間軸 (Timeline) */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; background: #E1E8ED; }
+        .experience-item { position: relative; margin-bottom: 40px; }
+        .experience-item::before {
+            content: ""; position: absolute; left: -34px; top: 8px; width: 10px; height: 10px;
+            border-radius: 50%; background: var(--primary-color); border: 3px solid var(--white); box-shadow: 0 0 0 3px rgba(0, 75, 135, 0.1);
+        }
+
+        /* Logo 顯示優化 */
+        .flex-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .company-logo, .edu-logo { width: 150px; max-height: 90px; object-fit: contain; }
+
+        /* --- 針對 NCYU Logo 的對齊與放大修正 --- */
+        img[src$="NCYU.png"] { 
+            width: 150px !important;    
+            max-height: 90px !important; 
+            transform: scale(1.35);     
+            transform-origin: center right; 
+            margin-right: -30px;        /* 負邊距強制與下方圖片對齊 */
+            margin-top: 5px;            
+        }
+
+        /* Portfolio 項目 */
+        .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .portfolio-card { 
+            padding: 20px; border-radius: 10px; background: #F9FBFC; border-left: 4px solid var(--accent-color);
+            transition: var(--transition);
+        }
+        .portfolio-card:hover { transform: translateX(5px); background: #f0f7f8; }
+        .portfolio-card h3 { margin: 0 0 8px 0; font-size: 1.1em; color: var(--primary-color); }
+        .portfolio-card p { margin: 0; font-size: 0.95em; color: var(--text-light); }
+
+        /* 聯絡資訊 Grid */
+        .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .contact-item { font-size: 0.95em; display: flex; align-items: center; gap: 8px; }
+        .contact-item strong { color: var(--primary-color); min-width: 60px; }
+
+        @media (max-width: 768px) {
+            .container { margin: 0; }
+            .inner-content { margin-top: 0; border-radius: 0; padding: 20px; }
+            .flex-header { flex-direction: column-reverse; align-items: flex-start; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .tab-nav { overflow-x: auto; }
+            img[src$="NCYU.png"] { transform: scale(1); width: 110px !important; margin: 0 0 10px 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-banner">
+            <img src="./static/images/Taiwan-Health.jpg" alt="Biotech Banner">
+        </div>
+
+        <div class="inner-content">
+            <input type="radio" id="tab1-radio" name="tabs" class="tab-radio" checked>
+            <input type="radio" id="tab2-radio" name="tabs" class="tab-radio">
+            <input type="radio" id="tab3-radio" name="tabs" class="tab-radio">
+
+            <header class="header">
+                <h1>{{ data.name }}</h1>            
+            </header>
+
+            <nav class="tab-nav">
+                <label for="tab1-radio" class="tab-label label1">專業概況</label>
+                <label for="tab2-radio" class="tab-label label2">職涯經歷</label>
+                <label for="tab3-radio" class="tab-label label3">專案與學術成果</label>
+            </nav>
+
+            <div id="content-1" class="tab-content">
+                <section class="section">
+                    <h2>聯絡資訊</h2>
+                    <div class="contact-grid">
+                        <div class="contact-item"><strong>Email</strong> <a href="mailto:{{ data.contact.email }}">{{ data.contact.email }}</a></div>
+                        <div class="contact-item"><strong>電話</strong> {{ data.contact.phone }}</div>
+                        <div class="contact-item" style="grid-column: span 2;"><strong>LinkedIn</strong> <a href="{{ data.contact.linkedin }}" target="_blank">點此查看個人檔案</a></div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>教育背景</h2>
+                    {% for edu in data.education %}
+                    <div class="flex-header" style="margin-bottom: 35px;">
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0; font-size: 1.15em;">{{ edu.degree }}</h3>
+                            <div style="color: var(--text-light);">{{ edu.school }} | {{ edu.period }}</div>
+                        </div>
+                        <img src="{{ edu.logo }}" class="edu-logo" alt="School Logo">
+                    </div>
+                    {% endfor %}
+                </section>
+
+                <section class="section">
+                    <h2>核心職能庫</h2>
+                    {% for cat in data.skill_categories %}
+                    <div class="skill-group">
+                        <strong>{{ cat.category }}</strong>
+                        <ul class="skill-list">
+                            {% for tag in cat.tags %}
+                            <li>{{ tag }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </section>
+            </div>
+
+            <div id="content-2" class="tab-content">
+                <section class="section">
+                    <h2>職涯歷程</h2>
+                    <div class="timeline">
+                        {% for exp in data.experiences %}
+                        <div class="experience-item">
+                            <div class="flex-header">
+                                <div style="flex: 1;">
+                                    <h3 style="margin: 0; color: var(--primary-color);">{{ exp.title }}</h3>
+                                    <div style="font-weight: 700; color: var(--text-main); margin: 2px 0;">{{ exp.company }}</div>
+                                    <div style="font-size: 0.85em; color: var(--accent-color); font-weight: 600; margin-bottom: 12px;">{{ exp.period }}</div>
+                                </div>
+                                <img src="{{ exp.logo }}" class="company-logo" alt="Company Logo">
+                            </div>
+                            <ul style="padding-left: 18px; margin: 0; font-size: 0.95em; color: var(--text-light);">
+                                {% for ach in exp.achievements %}
+                                <li style="margin-bottom: 8px;">{{ ach }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+            <div id="content-3" class="tab-content">
+                {% for p_group in data.portfolio %}
+                <section class="section">
+                    <h2>{{ p_group.p_type }}</h2>
+                    <div class="portfolio-grid">
+                        {% for p_item in p_group.p_items %}
+                        <div class="portfolio-card">
+                            <h3>{{ p_item.title }}</h3>
+                            <p>{{ p_item.desc }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
