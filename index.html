@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>陳冠中 (Jack Chen) - 履歷</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #004B87;    /* 醫藥權威藍 */
+            --accent-color: #00A3AD;     /* 生技創新綠 */
+            --bg-color: #F4F7F9;         /* 實驗室潔淨灰 */
+            --text-main: #2C3E50;
+            --text-light: #5A6C7D;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 75, 135, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
+            line-height: 1.7; margin: 0; padding: 0; 
+            background-color: var(--bg-color); color: var(--text-main); 
+        }
+
+        .container { max-width: 1000px; margin: 40px auto; padding-bottom: 60px; }
+
+        /* Hero Banner */
+        .hero-banner { 
+            width: 100%; height: 320px; border-radius: 20px 20px 0 0;
+            overflow: hidden; box-shadow: var(--shadow); position: relative;
+        }
+        .hero-banner img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 主容器 */
+        .inner-content { 
+            background: var(--white); margin-top: -40px; position: relative;
+            z-index: 10; border-radius: 20px; padding: 40px; box-shadow: var(--shadow);
+        }
+
+        .header { border-bottom: 2px solid #f0f4f8; padding-bottom: 30px; margin-bottom: 30px; }
+        .header h1 { color: var(--primary-color); font-size: 2.4em; margin: 0; font-weight: 700; }
+
+        /* Tabs 切換系統 */
+        .tab-radio { display: none; } 
+        .tab-nav { 
+            display: flex; gap: 10px; margin-bottom: 35px; border-bottom: 2px solid #E1E8ED;
+        }
+        .tab-label { 
+            color: var(--text-light); font-weight: 600; padding: 12px 25px; 
+            cursor: pointer; transition: var(--transition); position: relative; bottom: -2px;
+        }
+        #tab1-radio:checked ~ .tab-nav .label1, 
+        #tab2-radio:checked ~ .tab-nav .label2, 
+        #tab3-radio:checked ~ .tab-nav .label3 { 
+            color: var(--primary-color); border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #tab1-radio:checked ~ #content-1, #tab2-radio:checked ~ #content-2, #tab3-radio:checked ~ #content-3 { display: block; }
+
+        /* 區塊樣式 (Card UI) */
+        .section { margin-bottom: 25px; padding: 25px; background: var(--white); border-radius: 12px; border: 1px solid #f0f0f0; }
+        .section h2 { 
+            color: var(--primary-color); font-size: 1.35em; margin-top: 0; 
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section h2::before { content: ""; width: 4px; height: 22px; background: var(--accent-color); border-radius: 2px; }
+
+        /* 技能膠囊 */
+        .skill-group { margin-bottom: 20px; }
+        .skill-group strong { display: block; margin-bottom: 10px; color: var(--text-main); font-size: 0.95em; }
+        .skill-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-list li { 
+            background: #f0f9fa; color: var(--accent-color); padding: 5px 14px; 
+            border-radius: 50px; font-size: 0.85em; font-weight: 600; border: 1px solid #d1edf0;
+        }
+
+        /* 經歷時間軸 */
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 2px; background: #E1E8ED; }
+        .experience-item { position: relative; margin-bottom: 40px; }
+        .experience-item::before {
+            content: ""; position: absolute; left: -34px; top: 8px; width: 10px; height: 10px;
+            border-radius: 50%; background: var(--primary-color); border: 3px solid var(--white); box-shadow: 0 0 0 3px rgba(0, 75, 135, 0.1);
+        }
+
+        /* Logo 顯示優化 */
+        .flex-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .company-logo, .edu-logo { width: 150px; max-height: 90px; object-fit: contain; }
+
+        img[src$="NCYU.png"] { 
+            width: 150px !important;    
+            max-height: 90px !important; 
+            transform: scale(1.35);     
+            transform-origin: center right; 
+            margin-right: -30px;        
+            margin-top: 5px;            
+        }
+
+        /* Portfolio */
+        .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .portfolio-card { 
+            padding: 20px; border-radius: 10px; background: #F9FBFC; border-left: 4px solid var(--accent-color);
+            transition: var(--transition);
+        }
+        .portfolio-card:hover { transform: translateX(5px); background: #f0f7f8; }
+        .portfolio-card h3 { margin: 0 0 8px 0; font-size: 1.1em; color: var(--primary-color); }
+        .portfolio-card p { margin: 0; font-size: 0.95em; color: var(--text-light); }
+
+        /* 聯絡資訊 Grid */
+        .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .contact-item { font-size: 0.95em; display: flex; align-items: center; gap: 8px; }
+        .contact-item strong { color: var(--primary-color); min-width: 60px; }
+
+        /* 下載按鈕樣式 */
+        .print-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 75, 135, 0.4);
+            z-index: 9999;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .print-btn:hover { transform: translateY(-5px); background-color: var(--accent-color); }
+
+        /* --- PDF 列印專用樣式 (@media print) --- */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            body { background-color: white !important; }
+            .container { margin: 0 !important; max-width: 100% !important; padding: 0 !important; }
+            .inner-content { box-shadow: none !important; margin-top: 0 !important; padding: 20px !important; }
+            .hero-banner { height: 180px !important; border-radius: 0 !important; } 
+
+            /* 隱藏網頁互動元素 */
+            .tab-nav, .print-btn, .tab-radio { display: none !important; }
+
+            /* 強制展開所有分頁內容 */
+            .tab-content { 
+                display: block !important; 
+                opacity: 1 !important; 
+                animation: none !important; 
+                margin-bottom: 30px;
+            }
+
+            /* 防止內容被分頁裁切 */
+            .section, .experience-item, .portfolio-card, .skill-group {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            /* 關鍵：強制鎖定左右佈局，防止 Logo 跑到上方 */
+            .flex-header {
+                display: flex !important;
+                flex-direction: row !important; 
+                align-items: center !important;
+                justify-content: space-between !important;
+                flex-wrap: nowrap !important;
+            }
+            .company-logo, .edu-logo {
+                width: 120px !important;
+                max-height: 70px !important;
+                display: block !important;
+            }
+            img[src$="NCYU.png"] { 
+                width: 120px !important; 
+                transform: scale(1.2) !important;
+                margin-right: -20px !important;
+            }
+        }
+
+        /* --- 手機版樣式 (加上 screen 限制以免影響 PDF) --- */
+        @media screen and (max-width: 768px) {
+            .container { margin: 0; }
+            .inner-content { margin-top: 0; border-radius: 0; padding: 20px; }
+            .flex-header { flex-direction: column-reverse; align-items: flex-start; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .tab-nav { overflow-x: auto; }
+            img[src$="NCYU.png"] { transform: scale(1); width: 110px !important; margin: 0 0 10px 0; }
+            .print-btn { bottom: 20px; right: 20px; padding: 12px 20px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        下載完整 PDF
+    </button>
+
+    <div class="container">
+        <div class="hero-banner">
+            <img src="./static/images/Taiwan-Health.jpg" alt="Biotech Banner">
+        </div>
+
+        <div class="inner-content">
+            <input type="radio" id="tab1-radio" name="tabs" class="tab-radio" checked>
+            <input type="radio" id="tab2-radio" name="tabs" class="tab-radio">
+            <input type="radio" id="tab3-radio" name="tabs" class="tab-radio">
+
+            <header class="header">
+                <h1>陳冠中 (Jack Chen)</h1>            
+            </header>
+
+            <nav class="tab-nav">
+                <label for="tab1-radio" class="tab-label label1">專業概況</label>
+                <label for="tab2-radio" class="tab-label label2">職涯經歷</label>
+                <label for="tab3-radio" class="tab-label label3">專案與學術成果</label>
+            </nav>
+
+            <div id="content-1" class="tab-content">
+                <section class="section">
+                    <h2>聯絡資訊</h2>
+                    <div class="contact-grid">
+                        <div class="contact-item"><strong>Email</strong> <a href="mailto:jack61903@gmail.com">jack61903@gmail.com</a></div>
+                        <div class="contact-item"><strong>電話</strong> +886-928-550-996</div>
+                        <div class="contact-item" style="grid-column: span 2;"><strong>LinkedIn</strong> <a href="https://www.linkedin.com/in/%E5%86%A0%E4%B8%AD-%E9%99%B3-08082415a/" target="_blank">點此查看個人檔案</a></div>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <h2>教育背景</h2>
+                    
+                    <div class="flex-header" style="margin-bottom: 35px;">
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0; font-size: 1.15em;">微生物免疫與生物藥學系暨研究所 碩士</h3>
+                            <div style="color: var(--text-light);">國立嘉義大學 | 2019/09 - 2020/09</div>
+                        </div>
+                        <img src="./static/images/DMIB.jpg" class="edu-logo" alt="School Logo">
+                    </div>
+                    
+                    <div class="flex-header" style="margin-bottom: 35px;">
+                        <div style="flex: 1;">
+                            <h3 style="margin: 0; font-size: 1.15em;">微生物免疫與生物藥學系 學士</h3>
+                            <div style="color: var(--text-light);">國立嘉義大學 | 2015/09 - 2019/06</div>
+                        </div>
+                        <img src="./static/images/DMIB.jpg" class="edu-logo" alt="School Logo">
+                    </div>
+                    
+                </section>
+
+                <section class="section">
+                    <h2>核心職能庫</h2>
+                    
+                    <div class="skill-group">
+                        <strong>IVD 產品開發</strong>
+                        <ul class="skill-list">
+                            
+                            <li>設計開發流程</li>
+                            
+                            <li>ISO13485</li>
+                            
+                            <li>ISO14971</li>
+                            
+                            <li>IVDR</li>
+                            
+                            <li>QMS</li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-group">
+                        <strong>分子生物技術</strong>
+                        <ul class="skill-list">
+                            
+                            <li>DNA/RNA 萃取</li>
+                            
+                            <li>基因轉殖</li>
+                            
+                            <li>PCR 技術應用</li>
+                            
+                            <li>試劑凍乾配方</li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-group">
+                        <strong>微生物技術</strong>
+                        <ul class="skill-list">
+                            
+                            <li>無菌操作</li>
+                            
+                            <li>菌種篩選鑑定</li>
+                            
+                            <li>5L 發酵槽操作</li>
+                            
+                            <li>酒類與天貝發酵</li>
+                            
+                        </ul>
+                    </div>
+                    
+                    <div class="skill-group">
+                        <strong>分析與驗證</strong>
+                        <ul class="skill-list">
+                            
+                            <li>Micro-FTIR</li>
+                            
+                            <li>Bio-FET</li>
+                            
+                            <li>SDS-PAGE</li>
+                            
+                            <li>Western blotting</li>
+                            
+                            <li>ELISA</li>
+                            
+                        </ul>
+                    </div>
+                    
+                </section>
+            </div>
+
+            <div id="content-2" class="tab-content">
+                <section class="section">
+                    <h2>職涯歷程</h2>
+                    <div class="timeline">
+                        
+                        <div class="experience-item">
+                            <div class="flex-header">
+                                <div style="flex: 1;">
+                                    <h3 style="margin: 0; color: var(--primary-color);">高級研發工程師 / 研發工程師</h3>
+                                    <div style="font-weight: 700; color: var(--text-main); margin: 2px 0;">美商長典生技股份有限公司</div>
+                                    <div style="font-size: 0.85em; color: var(--accent-color); font-weight: 600; margin-bottom: 12px;">2023/03 - Now</div>
+                                </div>
+                                <img src="./static/images/NOVASCOPE.jpg" class="company-logo" alt="Company Logo">
+                            </div>
+                            <ul style="padding-left: 18px; margin: 0; font-size: 0.95em; color: var(--text-light);">
+                                
+                                <li style="margin-bottom: 8px;">阿茲海默症 (Alzheimer's disease) biomarker 檢測平台開發 (BCR)。</li>
+                                
+                                <li style="margin-bottom: 8px;">設計並完成平台第三方認證，結果與市場龍頭技術高度相關 (R > 0.9)，靈敏度達 pg 等級。</li>
+                                
+                                <li style="margin-bottom: 8px;">優化檢驗流程，成功縮減 50% 檢驗時間；構想設計高通量檢驗平台並執行效能評估。</li>
+                                
+                                <li style="margin-bottom: 8px;">使用 Micro-FTIR 驗證固體表面改質官能基與均勻度分析，並建立產線檢驗規範。</li>
+                                
+                                <li style="margin-bottom: 8px;">選用高穩定性生物分子化學修飾法進行共價鍵結，增加晶片表面安定性。</li>
+                                
+                                <li style="margin-bottom: 8px;">設計生物檢測試驗 (抗原抗體、核酸雜交方法學) 與執行 Bio-FET 臨床診斷效能試驗。</li>
+                                
+                                <li style="margin-bottom: 8px;">建立 ISO13485 三階文件與四階表單，協助公司順利取得 ISO13485 認證。</li>
+                                
+                                <li style="margin-bottom: 8px;">負責跨部門與跨領域之技術溝通、討論與專案進度管理。</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="flex-header">
+                                <div style="flex: 1;">
+                                    <h3 style="margin: 0; color: var(--primary-color);">研發工程師</h3>
+                                    <div style="font-weight: 700; color: var(--text-main); margin: 2px 0;">台灣圓點奈米技術股份有限公司</div>
+                                    <div style="font-size: 0.85em; color: var(--accent-color); font-weight: 600; margin-bottom: 12px;">2021/11 - 2023/03</div>
+                                </div>
+                                <img src="./static/images/TANBEAD.jpg" class="company-logo" alt="Company Logo">
+                            </div>
+                            <ul style="padding-left: 18px; margin: 0; font-size: 0.95em; color: var(--text-light);">
+                                
+                                <li style="margin-bottom: 8px;">[專案研發] 優化自動化核酸萃取試劑與 qPCR 檢測試劑開發，效能等同市場龍頭品牌。</li>
+                                
+                                <li style="margin-bottom: 8px;">[技術拓荒] 拓荒開發 qPCR 冷凍乾燥試劑，安定性達半年以上並維持與液態版本相等之效能。</li>
+                                
+                                <li style="margin-bottom: 8px;">[生化生產] 負責重組蛋白質 (E. coli system) 生產與純化技術。</li>
+                                
+                                <li style="margin-bottom: 8px;">[品質控管] 訂定微生物檢驗規範及原料/半成品/成品規格書，確保產線品質。</li>
+                                
+                                <li style="margin-bottom: 8px;">[法規認證] 撰寫體外診斷醫療器材 (IVDR、EUA) 技術文件與報告，成功取得 IVDR 認證。</li>
+                                
+                                <li style="margin-bottom: 8px;">[體系維護] 撰寫設計開發檔案 (DHF) 與風險評估管理，建立產品 BOM 表、包裝指引與標籤。</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="flex-header">
+                                <div style="flex: 1;">
+                                    <h3 style="margin: 0; color: var(--primary-color);">工程師</h3>
+                                    <div style="font-weight: 700; color: var(--text-main); margin: 2px 0;">圓鉐醫事檢驗所</div>
+                                    <div style="font-size: 0.85em; color: var(--accent-color); font-weight: 600; margin-bottom: 12px;">2021/06 - 2021/10</div>
+                                </div>
+                                <img src="./static/images/GENEROCK.jpg" class="company-logo" alt="Company Logo">
+                            </div>
+                            <ul style="padding-left: 18px; margin: 0; font-size: 0.95em; color: var(--text-light);">
+                                
+                                <li style="margin-bottom: 8px;">規劃並建立醫學檢驗實驗室，包含 P2 實驗室管理制度與感控流程建立。</li>
+                                
+                                <li style="margin-bottom: 8px;">負責檢驗試劑效能評估、分子檢驗技術 Troubleshooting 及醫檢師教育訓練。</li>
+                                
+                                <li style="margin-bottom: 8px;">協助新冠肺炎 (COVID-19) PCR 檢驗事務執行及相關行政庶務管理。</li>
+                                
+                            </ul>
+                        </div>
+                        
+                        <div class="experience-item">
+                            <div class="flex-header">
+                                <div style="flex: 1;">
+                                    <h3 style="margin: 0; color: var(--primary-color);">專任研究助理</h3>
+                                    <div style="font-weight: 700; color: var(--text-main); margin: 2px 0;">國立嘉義大學</div>
+                                    <div style="font-size: 0.85em; color: var(--accent-color); font-weight: 600; margin-bottom: 12px;">2020/10 - 2020/12</div>
+                                </div>
+                                <img src="./static/images/NCYU.png" class="company-logo" alt="Company Logo">
+                            </div>
+                            <ul style="padding-left: 18px; margin: 0; font-size: 0.95em; color: var(--text-light);">
+                                
+                                <li style="margin-bottom: 8px;">[基礎研究] 執行 Cloning、CRISPR/Cas9 質體設計及白色念珠菌基因轉殖菌株建構。</li>
+                                
+                                <li style="margin-bottom: 8px;">[產品開發] 精釀啤酒、紅白酒、蜂蜜酒等酒類產品開發，包含風味菌株篩選與製程優化。</li>
+                                
+                                <li style="margin-bottom: 8px;">[平台建立] 建立黃豆固態發酵平台 (天貝)，優化糖苷配基異黃酮生產製程與無菌管控。</li>
+                                
+                                <li style="margin-bottom: 8px;">[技術指導] 指導啤酒工作坊及勞動部職訓局自釀實作課程。</li>
+                                
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </section>
+            </div>
+
+            <div id="content-3" class="tab-content">
+                
+                <section class="section">
+                    <h2>專案成果</h2>
+                    <div class="portfolio-grid">
+                        
+                        <div class="portfolio-card">
+                            <h3>Bio-FET based Diagnostic Assay 開發與優化</h3>
+                            <p>研發 BCR 技術應用於阿茲海默症生物標記檢測，成功通過林口長庚醫院檢驗科第三方驗證。</p>
+                        </div>
+                        
+                        <div class="portfolio-card">
+                            <h3>2X qPCR Master Mix 優化與凍乾拓荒開發</h3>
+                            <p>效能與領先品牌相等，液態版本已成功上市，凍乾版本加速安定性已可達半年之保存期限。</p>
+                        </div>
+                        
+                        <div class="portfolio-card">
+                            <h3>SARS-CoV-2 Multiplex RT-qPCR diagnostic kit 開發</h3>
+                            <p>完成臨床前測試基準，並撰寫TFDA EUA文件申請審查。</p>
+                        </div>
+                        
+                        <div class="portfolio-card">
+                            <h3>Tissue genomic DNA extraction kit (IVD) 效能與縮時優化</h3>
+                            <p>多數組織檢體 A260/A230 > 1.8，可於45分鐘內完成核酸萃取。</p>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <h2>客戶拜訪與需求調查</h2>
+                    <div class="portfolio-grid">
+                        
+                        <div class="portfolio-card">
+                            <h3>醫學中心醫院合作</h3>
+                            <p>參與阿茲海默症生物標記於臨床檢驗中所需之規格定義與需求調查。</p>
+                        </div>
+                        
+                        <div class="portfolio-card">
+                            <h3>臺灣人體生物資料庫 (Taiwan Biobank)</h3>
+                            <p>開發 4-6 mL 濃縮血液之自動 gDNA 萃取流程，效能媲美領先品牌。</p>
+                        </div>
+                        
+                        <div class="portfolio-card">
+                            <h3>醫學檢驗所技術優化</h3>
+                            <p>指導醫檢師分生操作，並優化 SARS-CoV-2 核酸萃取平台，大幅縮短病患檢體篩檢時間。</p>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <h2>論文著作</h2>
+                    <div class="portfolio-grid">
+                        
+                        <div class="portfolio-card">
+                            <h3>白色念珠菌微衛星 CAI 多樣性對環境壓力與毒性因子 ECE1 之影響 (2020)</h3>
+                            <p>探討 Rlm1p 麩醯胺酸重複數對毒力與抗藥性的影響。</p>
+                        </div>
+                        
+                        <div class="portfolio-card">
+                            <h3>應用伽瑪輻射誘變改良少孢根黴優化天貝異黃酮含量 (2020)</h3>
+                            <p>第一作者發表於嘉大農林學報。透過輻射誘變改良菌種，提升發酵風味與營養價值。</p>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+                <section class="section">
+                    <h2>研討會海報</h2>
+                    <div class="portfolio-grid">
+                        
+                        <div class="portfolio-card">
+                            <h3>伽瑪輻射改良 Rhizopus oligosporus 蛋白酶與脂肪酶活性 (2019)</h3>
+                            <p>第一作者發表於 TTQAS 年度大會暨創新食品開發論壇。</p>
+                        </div>
+                        
+                        <div class="portfolio-card">
+                            <h3>探討乳酸菌代謝產物抑制白色念珠菌生長之效果 (2018)</h3>
+                            <p>第一作者發表於第 23 屆細菌學研討會。</p>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>
